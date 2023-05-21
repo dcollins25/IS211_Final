@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+</head>
+<body>
+    <h1>Search</h1>
+    <form method="POST" action="/search">
+        <div>
+            <label for="search_type">Search Type:</label>
+            <select id="search_type" name="search_type">
+                <option value="isbn">ISBN</option>
+                <option value="title">Title</option>
+            </select>
+            <label for="search_query">Search Query:</label>
+            <input type="text" id="search_query" name="search_query" required>
+            <button type="submit">Search</button>
+        </div>
+    </form>
+    {% if books %}
+        <h2>Search Results</h2>
+        <ul>
+            {% for book in books %}
+                <li>
+                    {{ book['title'] }} by {{ book['authors'] }}
+                    {% if book['page_count'] %}
+                        - Page Count: {{ book['page_count'] }}
+                    {% else %}
+                        - Page Count: Not available
+                    {% endif %}
+                    {% if book['average_rating'] %}
+                        - Average Rating: {{ book['average_rating'] }}
+                    {% else %}
+                        - Average Rating: Not available
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="/books">Go to Book List</a>
+    <form method="POST" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
